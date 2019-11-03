@@ -1,5 +1,6 @@
 <%@ page language="java" isELIgnored="false" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -60,6 +61,14 @@
 	href="${pageContext.request.contextPath}/plugins/bootstrap-slider/slider.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+	<script src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
+	<script type="">
+		/*$(function () {
+			$.post("${pageContext.request.contextPath}/patient/find",{},function () {
+
+			});
+		});*/
+	</script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -125,7 +134,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
+								<%--<tr>
 									<td><input name="ids" type="checkbox"></td>
 									<td>1</td>
 
@@ -140,23 +149,44 @@
 											<i class="fa fa-file-o"></i> 查看
 										</button>
 									</td>
-								</tr>
+								</tr>--%>
+							<c:forEach items="${patients}" var="patient" >
 								<tr>
 									<td><input name="ids" type="checkbox"></td>
-									<td>2</td>
-									<td>李四</td>
-									<td>
-										女
-									</td>
-									<td>妇科</td>
+									<td>${patient.id}</td>
+
+									<td>${patient.name}</td>
+									<c:if test="${patient.gender == 1}">
+										<td>
+											男
+										</td>
+									</c:if>
+									<c:if test="${patient.gender == 0}">
+										<td>
+											女
+										</td>
+									</c:if>
+									<c:if test="${patient.did == 0}">
+										<td>外科</td>
+									</c:if>
+									<c:if test="${patient.did == 1}">
+										<td>内科</td>
+									</c:if>
+									<c:if test="${patient.did == 2}">
+										<td>妇科</td>
+									</c:if>
+									<c:if test="${patient.did == 3}">
+										<td>儿科</td>
+									</c:if>
+
 									<td>
 										<button type="button" class="btn btn-default" title="查看"
-												onclick='location.href="subscribe-form-update.jsp"'>
+												onclick='location.href="${pageContext.request.contextPath}/patient/reoccur?id=${patient.id}"'>
 											<i class="fa fa-file-o"></i> 查看
 										</button>
 									</td>
 								</tr>
-
+							</c:forEach>
 
 							</tbody>
 
@@ -305,12 +335,12 @@
 			// 激活导航位置
 			setSidebarActive("order-manage");
 
-			// 列表按钮 
+			// 列表按钮
 			$("#dataList td input[type='checkbox']").iCheck({
 				checkboxClass : 'icheckbox_square-blue',
 				increaseArea : '20%'
 			});
-			// 全选操作 
+			// 全选操作
 			$("#selall").click(function() {
 				var clicks = $(this).is(':checked');
 				if (!clicks) {

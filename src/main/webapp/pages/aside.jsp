@@ -44,7 +44,7 @@
 				<ul class="treeview-menu">
 
 					<li id="system-setting1"><a
-							href="${pageContext.request.contextPath}/pages/patients-list.jsp">
+							href="${pageContext.request.contextPath}/patient/find">
 						<i class="fa fa-circle-o"></i> 患者列表
 					</a></li>
 
